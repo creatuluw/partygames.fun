@@ -25,6 +25,9 @@
 	});
 	
 	function updateConnectionStatus(connected: boolean) {
+		// Only run in browser environment
+		if (typeof document === 'undefined') return;
+		
 		const statusEl = document.getElementById('connection-status');
 		if (statusEl) {
 			if (connected) {

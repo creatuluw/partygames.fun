@@ -411,3 +411,143 @@ npm run design:format
 - **Validation Script**: `scripts/validate-design-system.js`
 - **ESLint Rules**: `.eslintrc-design-system.js`
 - **Pre-commit Hook**: `.husky/pre-commit`
+
+---
+
+## 🚀 Deployment Workflow
+
+### Standard Deployment Process
+**ALWAYS follow this exact sequence when deploying changes to Railway:**
+
+#### 1. Development & Testing
+```bash
+# Make your changes to components/features
+# Test locally
+npm run dev
+
+# Validate design system compliance
+npm run design:validate
+
+# Build and test
+npm run build
+```
+
+#### 2. Commit Changes
+```bash
+# Stage all changes
+git add .
+
+# Commit with descriptive message following our pattern
+git commit -m "✨ Feature: [Brief description]
+
+🔧 Changes:
+- [Specific change 1]
+- [Specific change 2]
+- [Specific change 3]
+
+🎮 UI/UX:
+- [Any UI improvements]
+- [Design system updates]
+
+[Additional context if needed]"
+```
+
+#### 3. Push to GitHub
+```bash
+# Push to trigger Railway deployment
+git push origin master
+```
+
+#### 4. Railway Deployment
+```bash
+# Check Railway status
+railway status
+
+# Monitor deployment (optional)
+railway logs
+
+# Deploy manually if auto-deploy didn't trigger
+railway up
+```
+
+### Commit Message Templates
+
+#### Feature Addition
+```
+✨ Feature: Add [feature name]
+
+🔧 Changes:
+- Add [component/feature]
+- Update [related files]
+- Implement [functionality]
+
+🎮 UI/UX:
+- [Design improvements]
+- [User experience updates]
+```
+
+#### Bug Fix
+```
+🐛 Fix: [Brief description of bug fixed]
+
+🔧 Changes:
+- Fix [specific issue]
+- Update [affected components]
+- Resolve [problem]
+
+🎯 Impact:
+- [What this fixes for users]
+```
+
+#### Design System Update
+```
+🎨 Design: [Design change description]
+
+🔧 Changes:
+- Update design system [component/pattern]
+- Rebuild [affected components]
+- Standardize [design elements]
+
+🚀 Improvements:
+- [Design consistency]
+- [User experience]
+```
+
+#### Solo Testing Feature
+```
+🧪 Solo Testing: Add [game/feature] testing mode
+
+🔧 Changes:
+- Allow games to be played with just 1 player for testing
+- Update game configuration [details]
+- Add test mode indicators
+
+🎮 Features:
+- Solo testing functionality for development
+```
+
+### Railway Deployment Notes
+- **Auto-deployment**: Railway automatically deploys when changes are pushed to `master`
+- **Build time**: Typically 2-3 minutes for full deployment
+- **WebSocket server**: Automatically restarts with new deployment
+- **Environment**: Production environment with full database connectivity
+- **Monitoring**: Use `railway logs` to monitor deployment progress
+
+### Emergency Deployment
+If you need to deploy urgently:
+```bash
+git add .
+git commit -m "🚨 Hotfix: [urgent fix description]"
+git push origin master
+railway up  # Force immediate deployment
+```
+
+### Post-Deployment Checklist
+- ✅ Verify the app loads correctly
+- ✅ Test WebSocket connections work
+- ✅ Check game session creation/joining
+- ✅ Verify mobile responsiveness
+- ✅ Test multiplayer functionality
+- ✅ Confirm design system is working properly
+
+**This workflow ensures consistent, reliable deployments and maintains our codebase quality.**
