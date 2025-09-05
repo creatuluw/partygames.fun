@@ -61,6 +61,9 @@ export interface GameConfig {
 	description: string;
 	minPlayers: number;
 	maxPlayers: number;
+	duration: number; // game duration in seconds
+	category: string;
+	icon: string;
 	defaultSettings: Record<string, any>;
 }
 
