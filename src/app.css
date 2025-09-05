@@ -1,10 +1,21 @@
-/* Import fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=fallback');
-@import url('https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;600;700;800;900&display=fallback');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=fallback') layer(base);
+@import url('https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@500;700;800;900&display=fallback') layer(base);
 
 @import 'tailwindcss';
-@plugin '@tailwindcss/forms';
-@plugin '@tailwindcss/typography';
+
+@plugin "@tailwindcss/forms" {
+  strategy: base;
+}
+
+/* Body styles matching Creative HTML template */
+body {
+	font-family: 'Inter', system-ui, -apple-system, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	background-color: white;
+	color: #374151;
+	letter-spacing: -0.025em;
+}
 
 /* Typography */
 .h1 {
@@ -47,15 +58,14 @@
     @apply px-4 py-2;
 }
 
-.btn-primary {
-    @apply btn text-white bg-blue-500 hover:bg-blue-600 shadow-xs;
-}
-
-.btn-secondary {
-    @apply btn text-gray-600 bg-white hover:bg-blue-100 hover:text-blue-600 shadow-xs;
-}
-
 /* Forms */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+}
+
 .form-input,
 .form-textarea,
 .form-multiselect,
@@ -87,35 +97,29 @@
 }
 
 .form-checkbox {
-    @apply rounded-xs;
+    @apply rounded-sm;
 }
 
-/* Cards */
-.card-basic {
-    @apply bg-white rounded-lg shadow-xs overflow-hidden;
+/* Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
 }
 
-.card-hoverable {
-    @apply card-basic group hover:shadow-xl transition duration-150 ease-in-out;
+.no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
-/* Body styling */
-body {
-  font-family: Inter, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: white;
-  color: rgb(31 41 55); /* gray-800 */
-  letter-spacing: -0.025em;
+/* Additional Tailwind directives */
+@utility rtl {
+  direction: rtl;
 }
 
-/* Font classes */
-.font-inter {
-  font-family: Inter, sans-serif;
-}
-
-.font-cabinet-grotesk {
-  font-family: 'Cabinet Grotesk', Inter, sans-serif;
+/* See Alpine.js */
+[x-cloak=""] {
+    display: none;
 }
 
 /* Game-specific styling that extends the design system */
