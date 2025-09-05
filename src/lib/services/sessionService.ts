@@ -128,6 +128,7 @@ class SessionService {
 			};
 
 			// Join the WebSocket session
+			console.log('🔌 Connecting to WebSocket for session:', sessionId);
 			await gameClient.joinSession(sessionId, joinResponse.player_id);
 
 			// Update client state

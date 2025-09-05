@@ -48,6 +48,11 @@ class GameWebSocketClient {
 					resolve();
 				});
 
+				// Handle join success confirmation
+				this.socket.on('join-success', (data) => {
+					console.log('✅ Successfully joined session:', data);
+				});
+
 				this.socket.on('connect_error', (error) => {
 					console.error('❌ Connection failed:', error);
 					this.connectionStatus.set('error');
@@ -134,7 +139,7 @@ class GameWebSocketClient {
 		this.currentSessionId = sessionId;
 		this.currentPlayerId = playerId;
 
-		return new Promise((resolve, reject) => {
+	return new Promise((resolve, reject) => {
 			this.socket!.emit('join-session', { sessionId, playerId });
 			
 			// Wait for confirmation or error
@@ -152,7 +157,8 @@ class GameWebSocketClient {
 				reject(new Error(error.message));
 			};
 
-			this.socket!.once('players-update', onSuccess);
+			// Listen for join success from our custom server
+			this.socket!.once('join-success', onSuccess);
 			this.socket!.once('error', onError);
 		});
 	}
