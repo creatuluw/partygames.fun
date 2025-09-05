@@ -127,6 +127,9 @@
 <div class="tap-game-container">
 	{#if gameState === 'waiting'}
 		<div class="game-status">
+			<div class="test-mode-indicator">
+				<span class="test-badge">🧪 Solo Test Mode</span>
+			</div>
 			<h2 class="game-title">👆 Tap Master</h2>
 			<p class="game-description">Get ready to tap as fast as you can!</p>
 			<div class="countdown-display">
@@ -239,6 +242,14 @@
 
 	.game-status {
 		@apply text-center space-y-6;
+	}
+
+	.test-mode-indicator {
+		@apply mb-4;
+	}
+
+	.test-badge {
+		@apply inline-block px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-semibold border border-purple-300;
 	}
 
 	.game-title {

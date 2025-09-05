@@ -6,6 +6,7 @@
 	export let isSelected: boolean = false;
 	export let playerCount: number = 0;
 	export let onSelect: (game: GameConfig) => void = () => {};
+	export let onQuickTest: (game: GameConfig) => void = () => {};
 
 	$: canPlay = playerCount >= game.minPlayers && playerCount <= game.maxPlayers;
 	$: categoryInfo = GAME_CATEGORIES[game.category as keyof typeof GAME_CATEGORIES];
@@ -73,7 +74,7 @@
 
 		<!-- Player Count Status -->
 		<div class="player-status">
-			{#if playerCount < game.minPlayers}
+			{#if playerCount < game.minPlayers && game.minPlayers > 1}
 				<span class="status-warning">
 					Need {game.minPlayers - playerCount} more player{game.minPlayers - playerCount !== 1 ? 's' : ''}
 				</span>
@@ -81,6 +82,19 @@
 				<span class="status-error">
 					Too many players (max {game.maxPlayers})
 				</span>
+			{:else if playerCount === 1 && game.minPlayers === 1}
+				<div class="test-mode-actions">
+					<span class="status-test">
+						🧪 Test Mode Available
+					</span>
+					<button 
+						class="quick-test-btn"
+						on:click|stopPropagation={() => onQuickTest(game)}
+						aria-label="Quick test {game.displayName}"
+					>
+						🚀 Quick Test
+					</button>
+				</div>
 			{:else}
 				<span class="status-ready">
 					Ready to play!
@@ -165,6 +179,18 @@
 
 	.status-error {
 		@apply text-red-600;
+	}
+
+	.status-test {
+		@apply text-purple-600 font-semibold;
+	}
+
+	.test-mode-actions {
+		@apply space-y-2;
+	}
+
+	.quick-test-btn {
+		@apply w-full px-3 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-colors duration-200;
 	}
 
 	.selection-indicator {

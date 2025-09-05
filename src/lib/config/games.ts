@@ -5,7 +5,7 @@ export const AVAILABLE_GAMES: GameConfig[] = [
     name: 'tap-15',
     displayName: 'Tap Master',
     description: 'Tap as fast as you can in 15 seconds! Who has the fastest fingers?',
-    minPlayers: 2,
+    minPlayers: 1, // Allow solo testing
     maxPlayers: 20,
     duration: 15, // seconds
     category: 'speed',
@@ -20,7 +20,7 @@ export const AVAILABLE_GAMES: GameConfig[] = [
     name: 'agario',
     displayName: 'Grow & Survive',
     description: 'Grow by eating pellets and smaller players. Last one standing wins!',
-    minPlayers: 2,
+    minPlayers: 1, // Allow solo testing
     maxPlayers: 10,
     duration: 180, // 3 minutes
     category: 'survival',

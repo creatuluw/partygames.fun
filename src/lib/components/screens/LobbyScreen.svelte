@@ -33,6 +33,12 @@
 		// Start the first selected game
 		sessionService.startGame(selectedGames[0].name, selectedGames[0].defaultSettings);
 	}
+
+	function quickTestGame(game: GameConfig) {
+		// Immediately start the game for solo testing
+		console.log('🧪 Quick testing game:', game.displayName);
+		sessionService.startGame(game.name, game.defaultSettings);
+	}
 </script>
 
 <div class="min-h-screen flex flex-col items-center justify-center p-4">
@@ -111,6 +117,7 @@
 									isSelected={selectedGames.some(g => g.name === game.name)}
 									playerCount={players.length}
 									onSelect={toggleGameSelection}
+									onQuickTest={quickTestGame}
 								/>
 							{/each}
 						</div>
@@ -119,19 +126,42 @@
 
 				<!-- Host Controls -->
 				<div class="host-controls">
-					<button 
-						class="btn btn-primary w-full text-lg py-4"
-						on:click={startGameSession}
-						disabled={selectedGames.length === 0}
-					>
-						{#if selectedGames.length === 0}
-							Select Games to Start
-						{:else if selectedGames.length === 1}
-							Start {selectedGames[0].displayName}
-						{:else}
-							Start Game Session ({selectedGames.length} games)
-						{/if}
-					</button>
+					{#if players.length === 1 && selectedGames.length > 0}
+						<!-- Solo Testing Mode -->
+						<div class="solo-test-info">
+							<div class="text-center mb-4 p-3 bg-purple-50 rounded-lg border border-purple-200">
+								<span class="text-purple-600 font-medium">
+									🧪 Solo Test Mode
+								</span>
+								<p class="text-sm text-purple-500 mt-1">Test the game by yourself</p>
+							</div>
+						</div>
+						<button 
+							class="btn btn-primary w-full text-lg py-4 bg-purple-600 hover:bg-purple-700"
+							on:click={startGameSession}
+						>
+							{#if selectedGames.length === 1}
+								🧪 Test {selectedGames[0].displayName}
+							{:else}
+								🧪 Test Games ({selectedGames.length})
+							{/if}
+						</button>
+					{:else}
+						<!-- Regular Multiplayer Mode -->
+						<button 
+							class="btn btn-primary w-full text-lg py-4"
+							on:click={startGameSession}
+							disabled={selectedGames.length === 0}
+						>
+							{#if selectedGames.length === 0}
+								Select Games to Start
+							{:else if selectedGames.length === 1}
+								Start {selectedGames[0].displayName}
+							{:else}
+								Start Game Session ({selectedGames.length} games)
+							{/if}
+						</button>
+					{/if}
 				</div>
 			{:else}
 				<div class="text-center text-gray-600 py-8">
