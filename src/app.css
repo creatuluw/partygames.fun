@@ -1,14 +1,121 @@
-/* Party Games App - Main CSS */
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=fallback');
+@import url('https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;600;700;800;900&display=fallback');
+
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
 
-/* Import our comprehensive design system */
-@import './lib/styles/design-system.css';
+/* Typography */
+.h1 {
+    @apply text-6xl font-extrabold;
+}
 
-/* Party Games specific app-level styles */
+.h2 {
+    @apply text-4xl font-extrabold;
+}
+
+.h3 {
+    @apply text-3xl font-extrabold;
+}
+
+.h4 {
+    @apply text-2xl font-extrabold;
+}
+
+@media (min-width: 768px) {
+    .h1 {
+        @apply text-7xl;
+    }
+
+    .h2 {
+        @apply text-5xl;
+    }
+}
+
+/* Buttons */
+.btn,
+.btn-sm {
+    @apply font-medium inline-flex items-center justify-center rounded-full leading-normal transition duration-150 ease-in-out;
+}
+
+.btn {
+    @apply px-6 py-3;
+}
+
+.btn-sm {
+    @apply px-4 py-2;
+}
+
+.btn-primary {
+    @apply btn text-white bg-blue-500 hover:bg-blue-600 shadow-xs;
+}
+
+.btn-secondary {
+    @apply btn text-gray-600 bg-white hover:bg-blue-100 hover:text-blue-600 shadow-xs;
+}
+
+/* Forms */
+.form-input,
+.form-textarea,
+.form-multiselect,
+.form-select,
+.form-checkbox,
+.form-radio {
+    @apply border border-gray-200 focus:ring-0 focus:ring-offset-0;
+}
+
+.form-input,
+.form-textarea,
+.form-multiselect,
+.form-select {
+    @apply bg-white text-sm px-3 py-2 focus:border-blue-500;
+}
+
+.form-input,
+.form-textarea {
+    @apply placeholder-gray-400;
+}
+
+.form-select {
+    @apply pr-10;
+}
+
+.form-checkbox,
+.form-radio {
+    @apply text-blue-500 checked:bg-blue-500 checked:border-transparent focus-visible:not-checked:border-blue-500;
+}
+
+.form-checkbox {
+    @apply rounded-xs;
+}
+
+/* Cards */
+.card-basic {
+    @apply bg-white rounded-lg shadow-xs overflow-hidden;
+}
+
+.card-hoverable {
+    @apply card-basic group hover:shadow-xl transition duration-150 ease-in-out;
+}
+
+/* Body styling */
 body {
-	/* Applied via design system: font-inter antialiased bg-white text-gray-800 tracking-tight */
+  font-family: Inter, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: white;
+  color: rgb(31 41 55); /* gray-800 */
+  letter-spacing: -0.025em;
+}
+
+/* Font classes */
+.font-inter {
+  font-family: Inter, sans-serif;
+}
+
+.font-cabinet-grotesk {
+  font-family: 'Cabinet Grotesk', Inter, sans-serif;
 }
 
 /* Game-specific styling that extends the design system */

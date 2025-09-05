@@ -12,12 +12,13 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<!-- Page wrapper following design system guidelines -->
+
+<!-- Page wrapper following Creative HTML template structure -->
 <div class="flex flex-col min-h-screen overflow-hidden">
 	<!-- Site header -->
-	<header class="header-standard">
-		<div class="container-standard">
-			<div class="header-content">
+	<header class="absolute w-full z-30">
+		<div class="max-w-6xl mx-auto px-4 sm:px-6">
+			<div class="flex items-center justify-between h-16 md:h-20">
 				<!-- Site branding -->
 				<div class="shrink-0 mr-4">
 					<!-- Logo -->
@@ -37,8 +38,8 @@
 	<!-- WebSocket connection status indicator -->
 	<div id="connection-status" class="connection-status" style="display: none;"></div>
 	
-	<!-- Main content area -->
-	<div class="grow">
+	<!-- Page content -->
+	<main class="grow">
 		{@render children?.()}
-	</div>
+	</main>
 </div>
