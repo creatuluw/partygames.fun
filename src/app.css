@@ -1,20 +1,33 @@
+/*! tailwindcss v4.0.3 | MIT License | https://tailwindcss.com */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=fallback') layer(base);
-@import url('https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@500;700;800;900&display=fallback') layer(base);
-
 @import 'tailwindcss';
 
 @plugin "@tailwindcss/forms" {
   strategy: base;
 }
 
-/* Body styles matching Creative HTML template */
-body {
-	font-family: 'Inter', system-ui, -apple-system, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	background-color: white;
-	color: #374151;
-	letter-spacing: -0.025em;
+@layer base {
+  @font-face {
+    font-family: 'Cabinet Grotesk';
+    font-weight: 700;
+    font-style: normal;
+    font-display: fallback;
+    src: url('https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@500;700;800;900&display=fallback');
+  }
+  @font-face {
+    font-family: 'Cabinet Grotesk';
+    font-weight: 800;
+    font-style: normal;
+    font-display: fallback;
+    src: url('https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@500;700;800;900&display=fallback');
+  }
+  @font-face {
+    font-family: 'Cabinet Grotesk';
+    font-weight: 500;
+    font-style: normal;
+    font-display: fallback;
+    src: url('https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@500;700;800;900&display=fallback');
+  }
 }
 
 /* Typography */
