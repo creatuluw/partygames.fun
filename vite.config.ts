@@ -10,9 +10,9 @@ const webSocketPlugin = {
 		server.httpServer.once('listening', () => {
 			try {
 				initializeWebSocketServer(server.httpServer);
-				console.log('✅ WebSocket server initialized');
+				console.log('✅ WebSocket server initialized (Development)');
 			} catch (error) {
-				console.error('❌ Failed to initialize WebSocket server:', error);
+				console.error('❌ Failed to initialize WebSocket server (Development):', error);
 			}
 		});
 	}
@@ -21,6 +21,7 @@ const webSocketPlugin = {
 export default defineConfig({
 	plugins: [sveltekit(), webSocketPlugin],
 	server: {
-		port: 3000
+		port: 3000,
+		host: '0.0.0.0'
 	}
 });
