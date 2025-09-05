@@ -41,9 +41,11 @@
 	}
 </script>
 
-<div class="min-h-screen flex flex-col items-center justify-center p-4">
-	<div class="card w-full max-w-2xl">
-		<h1 class="text-3xl font-bold text-center mb-8">Game Lobby</h1>
+<!-- Lobby Screen following design system -->
+<section class="container-standard">
+	<div class="section-standard">
+		<div class="card-basic p-6 w-full max-w-2xl mx-auto">
+			<h1 class="h2 text-center mb-8">Game Lobby</h1>
 		
 		<div class="space-y-6">
 			<!-- Room Info -->
@@ -75,7 +77,8 @@
 					<div class="flex items-center justify-between mb-4">
 						<h3 class="text-lg font-semibold">Select Games</h3>
 						<button 
-							class="btn-sm {showGameSelection ? 'btn-secondary' : 'btn-primary'}"
+							type="button"
+							class="{showGameSelection ? 'btn-secondary' : 'btn-primary'} btn-small"
 							on:click={() => showGameSelection = !showGameSelection}
 						>
 							{showGameSelection ? 'Hide Games' : 'Choose Games'}
@@ -137,7 +140,8 @@
 							</div>
 						</div>
 						<button 
-							class="btn btn-primary w-full text-lg py-4 bg-purple-600 hover:bg-purple-700"
+							type="button"
+							class="btn-primary w-full text-lg py-4 bg-purple-600 hover:bg-purple-700"
 							on:click={startGameSession}
 						>
 							{#if selectedGames.length === 1}
@@ -149,7 +153,8 @@
 					{:else}
 						<!-- Regular Multiplayer Mode -->
 						<button 
-							class="btn btn-primary w-full text-lg py-4"
+							type="button"
+							class="btn-primary w-full text-lg py-4"
 							on:click={startGameSession}
 							disabled={selectedGames.length === 0}
 						>
@@ -171,63 +176,13 @@
 			{/if}
 			
 			<!-- Leave Button -->
-			<div class="pt-4 border-t">
-				<button class="btn btn-secondary w-full" on:click={() => sessionService.leaveSession()}>
+			<div class="pt-4 border-t border-gray-200">
+				<button type="button" class="btn-secondary w-full" on:click={() => sessionService.leaveSession()}>
 					Leave Session
 				</button>
 			</div>
 		</div>
+		</div>
 	</div>
-</div>
+</section>
 
-<style>
-	.game-selection-section {
-		@apply border-t pt-6;
-	}
-
-	.btn-sm {
-		@apply px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200;
-	}
-
-	.btn-sm.btn-primary {
-		@apply bg-blue-600 text-white hover:bg-blue-700;
-	}
-
-	.btn-sm.btn-secondary {
-		@apply bg-gray-600 text-white hover:bg-gray-700;
-	}
-
-	.selected-game-chip {
-		@apply flex items-center space-x-2 bg-blue-100 text-blue-800 px-3 py-2 rounded-full text-sm font-medium;
-	}
-
-	.game-emoji {
-		@apply text-lg;
-	}
-
-	.game-name {
-		@apply font-medium;
-	}
-
-	.remove-game {
-		@apply w-5 h-5 flex items-center justify-center bg-blue-200 hover:bg-red-200 text-blue-600 hover:text-red-600 rounded-full text-xs font-bold transition-colors duration-200;
-	}
-
-	.game-cards-grid {
-		@apply grid grid-cols-1 md:grid-cols-2 gap-4 mt-4;
-	}
-
-	.host-controls {
-		@apply pt-6 border-t mt-6;
-	}
-
-	@media (max-width: 640px) {
-		.selected-game-chip {
-			@apply text-xs px-2 py-1;
-		}
-		
-		.game-cards-grid {
-			@apply grid-cols-1;
-		}
-	}
-</style>

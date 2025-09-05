@@ -1,0 +1,32 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Party Games Design System Pre-Commit Hook
+echo "🎨 Checking design system compliance..."
+
+# Run design system validation on staged files
+STAGED_SVELTE_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.svelte$' || true)
+
+if [ -n "$STAGED_SVELTE_FILES" ]; then
+  echo "Found staged Svelte files, validating design system compliance..."
+  
+  # Check design system compliance
+  npm run design:check
+  
+  if [ $? -ne 0 ]; then
+    echo ""
+    echo "❌ Design system validation failed!"
+    echo ""
+    echo "Please fix the design system issues before committing."
+    echo "Run 'npm run design:fix' to automatically fix some issues."
+    echo "Run 'npm run design:validate' to see detailed validation report."
+    echo ""
+    exit 1
+  fi
+  
+  echo "✅ Design system validation passed!"
+else
+  echo "No Svelte files staged for commit."
+fi
+
+echo "🚀 Pre-commit checks completed successfully!"

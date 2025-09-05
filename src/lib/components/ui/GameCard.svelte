@@ -10,6 +10,15 @@
 
 	$: canPlay = playerCount >= game.minPlayers && playerCount <= game.maxPlayers;
 	$: categoryInfo = GAME_CATEGORIES[game.category as keyof typeof GAME_CATEGORIES];
+	
+	// Design system classes based on state
+	$: cardClasses = `
+		card-hoverable
+		${isSelected ? 'border-blue-500 bg-blue-50' : 'border-gray-200'}
+		${canPlay ? 'cursor-pointer' : 'opacity-60 cursor-not-allowed'}
+		transition-all duration-150 ease-in-out
+		${canPlay ? 'hover:shadow-xl' : ''}
+	`;
 
 	function handleClick() {
 		if (canPlay) {
@@ -27,8 +36,9 @@
 	}
 </script>
 
+<!-- Game Card following design system -->
 <div 
-	class="card game-card {isSelected ? 'selected' : ''} {canPlay ? 'playable' : 'disabled'}"
+	class="{cardClasses} p-6 relative min-h-48"
 	on:click={handleClick}
 	on:keydown={(e) => e.key === 'Enter' && handleClick()}
 	role="button"
@@ -36,59 +46,60 @@
 	aria-label="Select {game.displayName} game"
 >
 	<!-- Game Icon and Category -->
-	<div class="flex items-start justify-between mb-3">
-		<div class="game-icon">
+	<div class="flex items-start justify-between mb-4">
+		<div class="text-3xl w-14 h-14 flex items-center justify-center bg-gray-100 rounded-full">
 			{game.icon}
 		</div>
-		<div class="category-badge {categoryInfo?.color || 'bg-gray-500'}">
+		<div class="px-2 py-1 text-xs text-white rounded-full font-medium {categoryInfo?.color || 'bg-gray-500'}">
 			{categoryInfo?.name || game.category}
 		</div>
 	</div>
 
 	<!-- Game Info -->
-	<div class="game-info">
-		<h3 class="game-title">
+	<div class="flex-1">
+		<h3 class="text-lg font-bold text-gray-800 mb-2 font-cabinet-grotesk">
 			{game.displayName}
 		</h3>
 		
-		<p class="game-description">
+		<p class="text-gray-600 text-sm mb-4 line-clamp-2">
 			{game.description}
 		</p>
 
 		<!-- Game Details -->
-		<div class="game-details">
-			<div class="detail-item">
-				<span class="detail-icon">👥</span>
-				<span class="detail-text">
+		<div class="space-y-2 mb-4">
+			<div class="flex items-center space-x-2">
+				<span class="text-sm">👥</span>
+				<span class="text-sm text-gray-700">
 					{game.minPlayers}-{game.maxPlayers} players
 				</span>
 			</div>
 			
-			<div class="detail-item">
-				<span class="detail-icon">⏱️</span>
-				<span class="detail-text">
+			<div class="flex items-center space-x-2">
+				<span class="text-sm">⏱️</span>
+				<span class="text-sm text-gray-700">
 					{formatDuration(game.duration)}
 				</span>
 			</div>
 		</div>
 
 		<!-- Player Count Status -->
-		<div class="player-status">
+		<div class="text-sm font-medium">
 			{#if playerCount < game.minPlayers && game.minPlayers > 1}
-				<span class="status-warning">
+				<span class="text-orange-600">
 					Need {game.minPlayers - playerCount} more player{game.minPlayers - playerCount !== 1 ? 's' : ''}
 				</span>
 			{:else if playerCount > game.maxPlayers}
-				<span class="status-error">
+				<span class="text-red-600">
 					Too many players (max {game.maxPlayers})
 				</span>
 			{:else if playerCount === 1 && game.minPlayers === 1}
-				<div class="test-mode-actions">
-					<span class="status-test">
+				<div class="space-y-2">
+					<span class="text-purple-600 font-semibold">
 						🧪 Test Mode Available
 					</span>
 					<button 
-						class="quick-test-btn"
+						type="button"
+						class="btn-small w-full bg-purple-600 hover:bg-purple-700 text-white"
 						on:click|stopPropagation={() => onQuickTest(game)}
 						aria-label="Quick test {game.displayName}"
 					>
@@ -96,7 +107,7 @@
 					</button>
 				</div>
 			{:else}
-				<span class="status-ready">
+				<span class="text-green-600">
 					Ready to play!
 				</span>
 			{/if}
@@ -105,110 +116,8 @@
 
 	<!-- Selection Indicator -->
 	{#if isSelected}
-		<div class="selection-indicator">
+		<div class="absolute top-3 right-3 bg-blue-500 text-white text-xs px-2 py-1 rounded-full font-bold">
 			✓ Selected
 		</div>
 	{/if}
 </div>
-
-<style>
-	.game-card {
-		@apply relative cursor-pointer transition-all duration-200 transform hover:scale-105;
-		min-height: 200px;
-	}
-
-	.game-card.playable {
-		@apply hover:shadow-xl border-gray-200;
-	}
-
-	.game-card.disabled {
-		@apply opacity-60 cursor-not-allowed transform-none hover:scale-100;
-	}
-
-	.game-card.selected {
-		@apply border-blue-500 bg-blue-50 shadow-lg;
-	}
-
-	.game-icon {
-		@apply text-4xl mb-2 w-16 h-16 flex items-center justify-center bg-white rounded-full shadow-md;
-	}
-
-	.category-badge {
-		@apply px-2 py-1 text-xs text-white rounded-full font-medium;
-	}
-
-	.game-info {
-		@apply flex-1;
-	}
-
-	.game-title {
-		@apply text-xl font-bold text-gray-800 mb-2;
-	}
-
-	.game-description {
-		@apply text-gray-600 text-sm mb-4 line-clamp-2;
-	}
-
-	.game-details {
-		@apply space-y-2 mb-4;
-	}
-
-	.detail-item {
-		@apply flex items-center space-x-2;
-	}
-
-	.detail-icon {
-		@apply text-sm;
-	}
-
-	.detail-text {
-		@apply text-sm text-gray-700;
-	}
-
-	.player-status {
-		@apply text-sm font-medium;
-	}
-
-	.status-ready {
-		@apply text-green-600;
-	}
-
-	.status-warning {
-		@apply text-orange-600;
-	}
-
-	.status-error {
-		@apply text-red-600;
-	}
-
-	.status-test {
-		@apply text-purple-600 font-semibold;
-	}
-
-	.test-mode-actions {
-		@apply space-y-2;
-	}
-
-	.quick-test-btn {
-		@apply w-full px-3 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-colors duration-200;
-	}
-
-	.selection-indicator {
-		@apply absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full font-bold;
-	}
-
-	/* Responsive adjustments */
-	@media (max-width: 640px) {
-		.game-card {
-			min-height: 180px;
-		}
-		
-		.game-icon {
-			@apply text-3xl w-12 h-12;
-		}
-		
-		.game-title {
-			@apply text-lg;
-		}
-	}
-</style>

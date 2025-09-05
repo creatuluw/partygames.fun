@@ -64,198 +64,214 @@
 	}
 </script>
 
-<div class="min-h-screen flex flex-col items-center justify-center p-4">
-	<!-- App Header -->
-	<div class="text-center mb-12">
-		<h1 class="text-5xl font-bold text-gray-800 mb-4">🎮</h1>
-		<h1 class="text-4xl font-bold text-gray-800 mb-2">Party Games</h1>
-		<p class="text-gray-600 text-lg max-w-md">
-			Play real-time multiplayer games with friends using your phone as a controller
-		</p>
-	</div>
-	
-	<!-- Main Actions -->
-	{#if !showJoinForm && !showCreateForm}
-		<div class="w-full max-w-sm space-y-4">
-			<button 
-				class="btn btn-primary w-full text-xl py-4"
-				on:click={() => showCreateForm = true}
-				disabled={isCreating || isJoining}
-			>
-				{#if isCreating}
-					<LoadingSpinner size="sm" color="text-white" />
-					<span class="ml-2">Creating...</span>
-				{:else}
-					Create Game Session
-				{/if}
-			</button>
-			
-			<button 
-				class="btn btn-secondary w-full text-xl py-4"
-				on:click={() => showJoinForm = true}
-				disabled={isCreating || isJoining}
-			>
-				{#if isJoining}
-					<LoadingSpinner size="sm" color="text-white" />
-					<span class="ml-2">Joining...</span>
-				{:else}
-					Join Game Session
-				{/if}
-			</button>
-		</div>
-		
-		<!-- How it Works -->
-		<div class="mt-16 max-w-2xl text-center">
-			<h3 class="text-xl font-semibold text-gray-800 mb-4">How it works</h3>
-			<div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-gray-600">
-				<div class="flex flex-col items-center">
-					<div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-2">
-						<span class="text-xl">📱</span>
-					</div>
-					<p><strong>1. Use Your Phone</strong><br>Your phone becomes the game controller</p>
-				</div>
-				<div class="flex flex-col items-center">
-					<div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-2">
-						<span class="text-xl">👥</span>
-					</div>
-					<p><strong>2. Invite Friends</strong><br>Share the room code with your friends</p>
-				</div>
-				<div class="flex flex-col items-center">
-					<div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-2">
-						<span class="text-xl">🎯</span>
-					</div>
-					<p><strong>3. Play Together</strong><br>Compete in real-time party games</p>
-				</div>
+<!-- Home Screen following design system -->
+<section class="container-standard">
+	<div class="section-standard">
+		<div class="flex flex-col items-center justify-center min-h-screen">
+			<!-- App Header -->
+			<div class="text-center mb-12">
+				<div class="text-5xl mb-4">🎮</div>
+				<h1 class="h1 text-center mb-4">Party Games</h1>
+				<p class="text-xl text-gray-500 max-w-lg mx-auto">
+					Play real-time multiplayer games with friends using your phone as a controller
+				</p>
 			</div>
-		</div>
-	{/if}
 	
-	<!-- Create Session Form -->
-	{#if showCreateForm}
-		<div class="card w-full max-w-md">
-			<h2 class="text-2xl font-bold text-center mb-6">Create Game Session</h2>
-			
-			<form on:submit|preventDefault={createSession} class="space-y-6">
-				<div>
-					<label for="host-name" class="block text-sm font-medium text-gray-700 mb-2">
-						Your Name
-					</label>
-					<input 
-						id="host-name"
-						type="text"
-						class="input"
-						bind:value={hostName}
-						placeholder="Enter your name"
-						maxlength="20"
-						required
-					/>
-				</div>
-				
-				<div>
-					<label for="max-players" class="block text-sm font-medium text-gray-700 mb-2">
-						Max Players (2-20)
-					</label>
-					<input 
-						id="max-players"
-						type="number"
-						class="input"
-						bind:value={maxPlayers}
-						min="2"
-						max="20"
-						required
-					/>
-				</div>
-				
-				<div class="flex space-x-3">
+			<!-- Main Actions -->
+			{#if !showJoinForm && !showCreateForm}
+				<div class="w-full max-w-sm space-y-4 game-controls">
 					<button 
-						type="submit"
-						class="btn btn-primary flex-1"
-						disabled={isCreating}
+						type="button"
+						class="btn-primary text-xl py-4 px-6 w-full"
+						on:click={() => showCreateForm = true}
+						disabled={isCreating || isJoining}
 					>
 						{#if isCreating}
-							<LoadingSpinner size="sm" color="text-white" />
+							<LoadingSpinner size="small" />
 							<span class="ml-2">Creating...</span>
 						{:else}
-							Create Session
+							Create Game Session
 						{/if}
 					</button>
 					
 					<button 
 						type="button"
-						class="btn btn-secondary flex-1"
-						on:click={resetForms}
-						disabled={isCreating}
-					>
-						Cancel
-					</button>
-				</div>
-			</form>
-		</div>
-	{/if}
-	
-	<!-- Join Session Form -->
-	{#if showJoinForm}
-		<div class="card w-full max-w-md">
-			<h2 class="text-2xl font-bold text-center mb-6">Join Game Session</h2>
-			
-			<form on:submit|preventDefault={joinSession} class="space-y-6">
-				<div>
-					<label for="room-code" class="block text-sm font-medium text-gray-700 mb-2">
-						Room Code
-					</label>
-					<input 
-						id="room-code"
-						type="text"
-						class="input text-center text-2xl font-mono tracking-widest"
-						bind:value={roomCode}
-						placeholder="123456"
-						maxlength="6"
-						pattern="[0-9]{6}"
-						inputmode="numeric"
-						required
-					/>
-					<p class="text-xs text-gray-500 mt-1">Enter the 6-digit room code</p>
-				</div>
-				
-				<div>
-					<label for="player-name" class="block text-sm font-medium text-gray-700 mb-2">
-						Your Name
-					</label>
-					<input 
-						id="player-name"
-						type="text"
-						class="input"
-						bind:value={playerName}
-						placeholder="Enter your name"
-						maxlength="20"
-						required
-					/>
-				</div>
-				
-				<div class="flex space-x-3">
-					<button 
-						type="submit"
-						class="btn btn-primary flex-1"
-						disabled={isJoining}
+						class="btn-secondary text-xl py-4 px-6 w-full"
+						on:click={() => showJoinForm = true}
+						disabled={isCreating || isJoining}
 					>
 						{#if isJoining}
-							<LoadingSpinner size="sm" color="text-white" />
+							<LoadingSpinner size="small" />
 							<span class="ml-2">Joining...</span>
 						{:else}
-							Join Session
+							Join Game Session
 						{/if}
 					</button>
-					
-					<button 
-						type="button"
-						class="btn btn-secondary flex-1"
-						on:click={resetForms}
-						disabled={isJoining}
-					>
-						Cancel
-					</button>
 				</div>
-			</form>
+		
+				<!-- How it Works -->
+				<div class="mt-16 max-w-2xl text-center">
+					<h3 class="h3 mb-6">How it works</h3>
+					<div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm text-gray-600">
+						<div class="flex flex-col items-center">
+							<div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-3">
+								<span class="text-2xl">📱</span>
+							</div>
+							<p class="text-center">
+								<span class="font-semibold text-gray-800">1. Use Your Phone</span><br>
+								Your phone becomes the game controller
+							</p>
+						</div>
+						<div class="flex flex-col items-center">
+							<div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-3">
+								<span class="text-2xl">👥</span>
+							</div>
+							<p class="text-center">
+								<span class="font-semibold text-gray-800">2. Invite Friends</span><br>
+								Share the room code with your friends
+							</p>
+						</div>
+						<div class="flex flex-col items-center">
+							<div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-3">
+								<span class="text-2xl">🎯</span>
+							</div>
+							<p class="text-center">
+								<span class="font-semibold text-gray-800">3. Play Together</span><br>
+								Compete in real-time party games
+							</p>
+						</div>
+					</div>
+				</div>
+			{/if}
+	
+			<!-- Create Session Form -->
+			{#if showCreateForm}
+				<div class="card-basic p-6 w-full max-w-md">
+					<h2 class="h2 text-center mb-6">Create Game Session</h2>
+					
+					<form on:submit|preventDefault={createSession} class="space-y-6">
+						<div class="mb-4">
+							<label for="host-name" class="block text-gray-500 text-sm font-medium mb-1">
+								Your Name
+							</label>
+							<input 
+								id="host-name"
+								type="text"
+								class="form-input w-full text-gray-800"
+								bind:value={hostName}
+								placeholder="Enter your name"
+								maxlength="20"
+								required
+							/>
+						</div>
+						
+						<div class="mb-4">
+							<label for="max-players" class="block text-gray-500 text-sm font-medium mb-1">
+								Max Players (2-20)
+							</label>
+							<input 
+								id="max-players"
+								type="number"
+								class="form-input w-full text-gray-800"
+								bind:value={maxPlayers}
+								min="2"
+								max="20"
+								required
+							/>
+						</div>
+						
+						<div class="flex space-x-3 game-controls">
+							<button 
+								type="submit"
+								class="btn-primary flex-1"
+								disabled={isCreating}
+							>
+								{#if isCreating}
+									<LoadingSpinner size="small" />
+									<span class="ml-2">Creating...</span>
+								{:else}
+									Create Session
+								{/if}
+							</button>
+							
+							<button 
+								type="button"
+								class="btn-secondary flex-1"
+								on:click={resetForms}
+								disabled={isCreating}
+							>
+								Cancel
+							</button>
+						</div>
+					</form>
+				</div>
+			{/if}
+	
+			<!-- Join Session Form -->
+			{#if showJoinForm}
+				<div class="card-basic p-6 w-full max-w-md">
+					<h2 class="h2 text-center mb-6">Join Game Session</h2>
+					
+					<form on:submit|preventDefault={joinSession} class="space-y-6">
+						<div class="mb-4">
+							<label for="room-code" class="block text-gray-500 text-sm font-medium mb-1">
+								Room Code
+							</label>
+							<input 
+								id="room-code"
+								type="text"
+								class="form-input w-full text-gray-800 text-center text-2xl font-mono tracking-widest"
+								bind:value={roomCode}
+								placeholder="123456"
+								maxlength="6"
+								pattern="[0-9]{6}"
+								inputmode="numeric"
+								required
+							/>
+							<p class="text-xs text-gray-500 mt-1">Enter the 6-digit room code</p>
+						</div>
+						
+						<div class="mb-4">
+							<label for="player-name" class="block text-gray-500 text-sm font-medium mb-1">
+								Your Name
+							</label>
+							<input 
+								id="player-name"
+								type="text"
+								class="form-input w-full text-gray-800"
+								bind:value={playerName}
+								placeholder="Enter your name"
+								maxlength="20"
+								required
+							/>
+						</div>
+						
+						<div class="flex space-x-3 game-controls">
+							<button 
+								type="submit"
+								class="btn-primary flex-1"
+								disabled={isJoining}
+							>
+								{#if isJoining}
+									<LoadingSpinner size="small" />
+									<span class="ml-2">Joining...</span>
+								{:else}
+									Join Session
+								{/if}
+							</button>
+							
+							<button 
+								type="button"
+								class="btn-secondary flex-1"
+								on:click={resetForms}
+								disabled={isJoining}
+							>
+								Cancel
+							</button>
+						</div>
+					</form>
+				</div>
+			{/if}
 		</div>
-	{/if}
-</div>
+	</div>
+</section>

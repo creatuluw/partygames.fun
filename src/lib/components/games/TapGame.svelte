@@ -124,26 +124,30 @@
 	}
 </script>
 
-<div class="tap-game-container">
-	{#if gameState === 'waiting'}
-		<div class="game-status">
-			<div class="test-mode-indicator">
-				<span class="test-badge">🧪 Solo Test Mode</span>
+<!-- Tap Game following design system -->
+<section class="container-standard">
+	<div class="section-standard">
+		{#if gameState === 'waiting'}
+			<div class="text-center">
+				<div class="mb-4">
+					<span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">
+						🧪 Solo Test Mode
+					</span>
+				</div>
+				<h2 class="h2 mb-4">👆 Tap Master</h2>
+				<p class="text-xl text-gray-600 mb-8">Get ready to tap as fast as you can!</p>
+				<div class="text-6xl font-bold text-blue-500">
+					Ready?
+				</div>
 			</div>
-			<h2 class="game-title">👆 Tap Master</h2>
-			<p class="game-description">Get ready to tap as fast as you can!</p>
-			<div class="countdown-display">
-				<span class="countdown-number">Ready?</span>
+		{:else if gameState === 'countdown'}
+			<div class="text-center">
+				<h2 class="h2 mb-4">👆 Tap Master</h2>
+				<p class="text-xl text-gray-600 mb-8">Tap the button as fast as possible!</p>
+				<div class="text-8xl font-bold text-green-500 game-feedback">
+					{countdownTimer}
+				</div>
 			</div>
-		</div>
-	{:else if gameState === 'countdown'}
-		<div class="game-status">
-			<h2 class="game-title">👆 Tap Master</h2>
-			<p class="game-description">Tap the button as fast as possible!</p>
-			<div class="countdown-display">
-				<span class="countdown-number">{countdownTimer}</span>
-			</div>
-		</div>
 	{:else if gameState === 'playing'}
 		<div class="playing-interface">
 			<!-- Game Header -->
@@ -173,16 +177,17 @@
 				aria-label="Tap to score points"
 			>
 				<div class="tap-button-wrapper">
-					<button 
-						class="tap-button"
-						bind:this={tapButton}
-						on:click={handleTap}
-						on:touchstart={handleTap}
-						aria-label="Tap button"
-					>
-						<span class="tap-icon">👆</span>
-						<span class="tap-text">TAP!</span>
-					</button>
+				<button 
+					type="button"
+					class="btn-primary text-6xl py-16 px-16 rounded-full min-h-32 min-w-32 game-controls"
+					bind:this={tapButton}
+					on:click={handleTap}
+					on:touchstart={handleTap}
+					aria-label="Tap button"
+				>
+					<span class="block">👆</span>
+					<span class="block text-xl mt-2">TAP!</span>
+				</button>
 				</div>
 
 				<!-- Tap Effects -->

@@ -18,7 +18,15 @@
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run && npm run test:e2e",
 		"test:e2e": "playwright test",
-		"setup-db": "node scripts/setup-database.js"
+		"setup-db": "node scripts/setup-database.js",
+		"generate:component": "node scripts/generate-component.js",
+		"design:check": "npm run design:lint && npm run design:format:check",
+		"design:fix": "npm run design:lint:fix && npm run design:format",
+		"design:lint": "eslint --config .eslintrc-design-system.js src/lib/components/**/*.svelte",
+		"design:lint:fix": "eslint --config .eslintrc-design-system.js src/lib/components/**/*.svelte --fix",
+		"design:format": "prettier --write src/lib/components/**/*.svelte",
+		"design:format:check": "prettier --check src/lib/components/**/*.svelte",
+		"design:validate": "node scripts/validate-design-system.js"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.49.1",

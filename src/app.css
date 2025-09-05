@@ -1,60 +1,51 @@
+/* Party Games App - Main CSS */
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
 
-/* Fallback styles in case Tailwind isn't loading */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 16px;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s;
-    min-height: 44px;
-    min-width: 44px;
+/* Import our comprehensive design system */
+@import './lib/styles/design-system.css';
+
+/* Party Games specific app-level styles */
+body {
+	/* Applied via design system: font-inter antialiased bg-white text-gray-800 tracking-tight */
 }
 
-.btn-primary {
-    background-color: #2563eb;
-    color: white;
+/* Game-specific styling that extends the design system */
+.game-container {
+	@apply min-h-screen flex flex-col;
 }
 
-.btn-primary:hover {
-    background-color: #1d4ed8;
+/* Mobile-first responsive design for game controls */
+.game-controls {
+	@apply p-4 space-y-4;
+	min-height: 44px; /* Minimum touch target size */
 }
 
-.btn-secondary {
-    background-color: #4b5563;
-    color: white;
+.game-controls button,
+.game-controls input {
+	min-height: 44px; /* Accessibility: minimum touch target */
+	min-width: 44px;
 }
 
-.btn-secondary:hover {
-    background-color: #374151;
+/* Real-time game feedback */
+.game-feedback {
+	@apply transition-all duration-300 ease-out;
 }
 
-.input {
-    width: 100%;
-    padding: 12px 16px;
-    font-size: 16px;
-    border: 2px solid #d1d5db;
-    border-radius: 8px;
-    min-height: 44px;
+/* WebSocket connection status indicators */
+.connection-status {
+	@apply fixed top-4 right-4 z-50 px-3 py-1 rounded-full text-sm font-medium;
 }
 
-.input:focus {
-    border-color: #2563eb;
-    outline: none;
+.connection-status.connected {
+	@apply bg-green-100 text-green-800 border border-green-200;
 }
 
-.card {
-    background-color: white;
-    border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e5e7eb;
+.connection-status.connecting {
+	@apply bg-yellow-100 text-yellow-800 border border-yellow-200;
+}
+
+.connection-status.disconnected {
+	@apply bg-red-100 text-red-800 border border-red-200;
 }

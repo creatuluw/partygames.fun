@@ -19,7 +19,31 @@
 		currentScreen = state.currentScreen;
 		isConnected = state.isConnected;
 		error = state.error;
+		
+		// Update connection status indicator
+		updateConnectionStatus(state.isConnected);
 	});
+	
+	function updateConnectionStatus(connected: boolean) {
+		const statusEl = document.getElementById('connection-status');
+		if (statusEl) {
+			if (connected) {
+				statusEl.className = 'connection-status connected';
+				statusEl.textContent = 'Connected';
+				statusEl.style.display = 'block';
+				// Hide after 2 seconds
+				setTimeout(() => {
+					statusEl.style.display = 'none';
+				}, 2000);
+			} else if (currentScreen !== 'home') {
+				statusEl.className = 'connection-status disconnected';
+				statusEl.textContent = 'Disconnected';
+				statusEl.style.display = 'block';
+			} else {
+				statusEl.style.display = 'none';
+			}
+		}
+	}
 	
 	onDestroy(() => {
 		unsubscribe();
@@ -30,7 +54,8 @@
 	<title>Party Games - Multiplayer Fun with Friends</title>
 </svelte:head>
 
-<main class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+<!-- Game container following design system -->
+<div class="game-container bg-gradient-to-br from-gray-50 to-blue-50">
 	<!-- Error Notification -->
 	{#if error}
 		<ErrorNotification 
@@ -49,48 +74,12 @@
 	{:else if currentScreen === 'results'}
 		<ResultsScreen />
 	{:else}
-		<div class="flex items-center justify-center h-screen">
-			<LoadingSpinner />
+		<div class="container-standard">
+			<div class="section-standard">
+				<div class="flex items-center justify-center">
+					<LoadingSpinner />
+				</div>
+			</div>
 		</div>
 	{/if}
-</main>
-
-<style>
-	:global(body) {
-		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-	}
-	
-	:global(.btn) {
-		@apply px-6 py-3 rounded-lg font-semibold text-white transition-all duration-200 touch-manipulation;
-		min-height: 44px; /* Minimum touch target size */
-		min-width: 44px;
-	}
-	
-	:global(.btn-primary) {
-		@apply bg-blue-600 hover:bg-blue-700 active:bg-blue-800 shadow-lg;
-	}
-	
-	:global(.btn-secondary) {
-		@apply bg-gray-600 hover:bg-gray-700 active:bg-gray-800;
-	}
-	
-	:global(.btn-danger) {
-		@apply bg-red-600 hover:bg-red-700 active:bg-red-800;
-	}
-	
-	:global(.btn:disabled) {
-		@apply opacity-50 cursor-not-allowed;
-	}
-	
-	:global(.input) {
-		@apply w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition-colors;
-		min-height: 44px; /* Minimum touch target size */
-		font-size: 16px; /* Prevent zoom on iOS */
-	}
-	
-	:global(.card) {
-		@apply bg-white rounded-xl shadow-lg p-6 border border-gray-200;
-	}
-</style>
+</div>

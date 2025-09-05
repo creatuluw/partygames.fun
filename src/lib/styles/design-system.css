@@ -1,0 +1,351 @@
+/* 
+ * Party Games Design System CSS
+ * Based on UI Design Guidelines - Auto-generated utilities and components
+ * This file ensures consistency across the application
+ */
+
+/* Import Inter font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=fallback');
+
+/* Custom font variables for easy reference */
+:root {
+  --font-inter: 'Inter', sans-serif;
+  --font-cabinet-grotesk: 'Cabinet Grotesk', sans-serif;
+  
+  /* Design system colors - matching UI guidelines */
+  --color-primary: theme('colors.blue.500');
+  --color-primary-hover: theme('colors.blue.600');
+  --color-primary-light: theme('colors.blue.100');
+  --color-primary-accent: theme('colors.blue.300');
+  
+  --color-text-primary: theme('colors.gray.800');
+  --color-text-secondary: theme('colors.gray.500');
+  --color-text-muted: theme('colors.gray.400');
+  
+  --color-background: theme('colors.white');
+  --color-background-light: theme('colors.gray.50');
+  --color-background-subtle: theme('colors.gray.100');
+  
+  --color-border: theme('colors.gray.200');
+  --color-border-focus: theme('colors.blue.500');
+  
+  /* Spacing scale - following design guidelines */
+  --spacing-section: theme('spacing.32') theme('spacing.12');
+  --spacing-section-md: theme('spacing.40') theme('spacing.20');
+  --header-height: theme('spacing.16');
+  --header-height-md: theme('spacing.20');
+}
+
+/* Base typography classes following design guidelines */
+@layer base {
+  body {
+    @apply font-inter antialiased bg-white text-gray-800 tracking-tight;
+  }
+  
+  /* Custom font loading for Cabinet Grotesk (when available) */
+  .font-cabinet-grotesk {
+    font-family: var(--font-cabinet-grotesk), var(--font-inter), sans-serif;
+  }
+}
+
+/* Component layer - following design system patterns */
+@layer components {
+  
+  /* Typography utilities from design guidelines */
+  .h1 {
+    @apply text-6xl font-extrabold font-cabinet-grotesk;
+  }
+  
+  .h2 {
+    @apply text-4xl font-extrabold font-cabinet-grotesk;
+  }
+  
+  .h3 {
+    @apply text-3xl font-extrabold font-cabinet-grotesk;
+  }
+  
+  .h4 {
+    @apply text-2xl font-extrabold font-cabinet-grotesk;
+  }
+  
+  /* Responsive heading improvements */
+  @media (min-width: 768px) {
+    .h1 { @apply text-7xl; }
+    .h2 { @apply text-5xl; }
+  }
+  
+  /* Button system from design guidelines */
+  .btn,
+  .btn-sm {
+    @apply font-medium inline-flex items-center justify-center rounded-full 
+           leading-normal transition duration-150 ease-in-out;
+  }
+  
+  .btn {
+    @apply px-6 py-3;
+  }
+  
+  .btn-sm {
+    @apply px-4 py-2;
+  }
+  
+  /* Button variants */
+  .btn-primary {
+    @apply btn text-white bg-blue-500 hover:bg-blue-600 shadow-xs;
+  }
+  
+  .btn-secondary {
+    @apply btn text-gray-600 bg-white hover:bg-blue-100 hover:text-blue-600 shadow-xs;
+  }
+  
+  .btn-small {
+    @apply btn-sm text-white bg-blue-500 hover:bg-blue-600 shadow-xs;
+  }
+  
+  /* Form system from design guidelines */
+  .form-input,
+  .form-textarea,
+  .form-select {
+    @apply bg-white text-sm px-3 py-2 border border-gray-200 
+           focus:ring-0 focus:ring-offset-0 focus:border-blue-500;
+  }
+  
+  .form-input,
+  .form-textarea {
+    @apply placeholder-gray-400;
+  }
+  
+  .form-select {
+    @apply pr-10;
+  }
+  
+  .form-checkbox,
+  .form-radio {
+    @apply text-blue-500 border border-gray-200 focus:ring-0 focus:ring-offset-0
+           checked:bg-blue-500 checked:border-transparent 
+           focus-visible:not-checked:border-blue-500;
+  }
+  
+  .form-checkbox {
+    @apply rounded-sm;
+  }
+  
+  /* Layout containers from design guidelines */
+  .container-standard {
+    @apply max-w-6xl mx-auto px-4 sm:px-6;
+  }
+  
+  .container-narrow {
+    @apply max-w-3xl mx-auto;
+  }
+  
+  .container-form {
+    @apply max-w-sm mx-auto;
+  }
+  
+  /* Section layouts */
+  .section-standard {
+    @apply pt-32 pb-12;
+  }
+  
+  @media (min-width: 768px) {
+    .section-standard {
+      @apply pt-40 pb-20;
+    }
+  }
+  
+  /* Header component styles */
+  .header-standard {
+    @apply absolute w-full z-30;
+  }
+  
+  .header-content {
+    @apply flex items-center justify-between h-16;
+  }
+  
+  @media (min-width: 768px) {
+    .header-content {
+      @apply h-20;
+    }
+  }
+  
+  /* Navigation styles */
+  .nav-link {
+    @apply font-medium text-gray-600 decoration-blue-500 decoration-2 
+           underline-offset-2 hover:underline px-3 py-2 
+           transition duration-150 ease-in-out;
+  }
+  
+  @media (min-width: 1024px) {
+    .nav-link {
+      @apply px-5;
+    }
+  }
+  
+  /* Card system from design guidelines */
+  .card-basic {
+    @apply bg-white rounded-lg shadow-xs overflow-hidden;
+  }
+  
+  .card-hoverable {
+    @apply card-basic group hover:shadow-xl transition duration-150 ease-in-out;
+  }
+  
+  /* Gallery/grid card with overlay */
+  .card-gallery {
+    @apply relative group hover:shadow-xl transition duration-150 ease-in-out;
+  }
+  
+  .card-overlay {
+    @apply absolute bottom-0 left-0 right-0 p-4
+           md:hidden md:group-hover:block;
+  }
+  
+  .card-backdrop {
+    @apply absolute inset-0 -mt-4 bg-gradient-to-t from-gray-800 to-transparent 
+           opacity-80 pointer-events-none;
+  }
+  
+  /* Category/Filter button system */
+  .filter-button {
+    @apply relative font-medium text-gray-800 text-sm pl-3 pr-1.5 py-1.5 
+           border rounded-full inline-flex m-1.5 transition duration-150 ease-in-out;
+  }
+  
+  .filter-button-active {
+    @apply filter-button bg-blue-100 border-blue-300;
+  }
+  
+  .filter-button-inactive {
+    @apply filter-button bg-white border-gray-200;
+  }
+  
+  .filter-badge {
+    @apply text-xs font-semibold px-1 py-px rounded-full ml-2;
+  }
+  
+  .filter-badge-active {
+    @apply filter-badge text-white bg-blue-300;
+  }
+  
+  .filter-badge-inactive {
+    @apply filter-badge text-gray-400 bg-gray-100;
+  }
+  
+  /* Divider with text (e.g., "or" between forms) */
+  .divider-text {
+    @apply flex items-center my-6;
+  }
+  
+  .divider-line {
+    @apply border-t border-gray-200 grow;
+  }
+  
+  .divider-line-left {
+    @apply divider-line mr-3;
+  }
+  
+  .divider-line-right {
+    @apply divider-line ml-3;
+  }
+  
+  .divider-label {
+    @apply text-sm text-gray-500 italic;
+  }
+  
+  /* Page wrapper from design guidelines */
+  .page-wrapper {
+    @apply flex flex-col min-h-screen overflow-hidden;
+  }
+  
+  .page-main {
+    @apply grow;
+  }
+  
+  /* Utility classes for scrollbar hiding */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Animation and interaction utilities */
+  .animation-fade-up {
+    @apply opacity-0 translate-y-4 transition-all duration-700;
+  }
+  
+  .animation-fade-up.aos-animate {
+    @apply opacity-100 translate-y-0;
+  }
+  
+  /* Logo/Brand styling */
+  .brand-logo {
+    @apply font-cabinet-grotesk font-bold text-xl text-blue-500 
+           group-hover:text-blue-600 transition duration-150 ease-in-out;
+  }
+  
+  /* Social login buttons */
+  .btn-social {
+    @apply btn-sm w-full relative flex items-center;
+  }
+  
+  .btn-twitter {
+    @apply btn-social text-white bg-[#1D9BF0] hover:bg-[#1A90DF];
+  }
+}
+
+/* Utility layer for additional design system utilities */
+@layer utilities {
+  
+  /* Text color utilities matching design system */
+  .text-primary { color: var(--color-primary); }
+  .text-primary-hover { color: var(--color-primary-hover); }
+  
+  /* Background utilities */
+  .bg-primary { background-color: var(--color-primary); }
+  .bg-primary-hover { background-color: var(--color-primary-hover); }
+  .bg-primary-light { background-color: var(--color-primary-light); }
+  
+  /* Border utilities */
+  .border-primary { border-color: var(--color-primary); }
+  .border-focus { border-color: var(--color-border-focus); }
+  
+  /* Design system spacing utilities */
+  .section-spacing {
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+  }
+  
+  @media (min-width: 768px) {
+    .section-spacing {
+      padding-top: var(--spacing-section-md);
+      padding-bottom: var(--spacing-section-md);
+    }
+  }
+  
+  /* Header height utilities */
+  .header-height { height: var(--header-height); }
+  
+  @media (min-width: 768px) {
+    .header-height { height: var(--header-height-md); }
+  }
+}
+
+/* Alpine.js cloak utility */
+[x-cloak] {
+  display: none !important;
+}
+
+/* Focus outline improvements for accessibility */
+@layer base {
+  *:focus {
+    @apply outline-none;
+  }
+  
+  *:focus-visible {
+    @apply ring-2 ring-blue-500 ring-offset-2;
+  }
+}

@@ -1,16 +1,18 @@
 <script lang="ts">
-	export let size: 'sm' | 'md' | 'lg' = 'md';
-	export let color: string = 'text-blue-600';
-	
-	const sizeClasses = {
-		sm: 'w-4 h-4',
-		md: 'w-8 h-8', 
-		lg: 'w-12 h-12'
-	};
+	export let size: 'small' | 'medium' | 'large' = 'medium';
+	export let message: string = '';
+
+	$: sizeClasses = {
+		small: 'w-4 h-4',
+		medium: 'w-8 h-8',
+		large: 'w-12 h-12'
+	}[size];
 </script>
 
-<div class="flex items-center justify-center">
-	<div class="{sizeClasses[size]} {color} animate-spin">
+<!-- Loading spinner following design system -->
+<div class="flex flex-col items-center justify-center space-y-3">
+	<div class="{sizeClasses} text-blue-500 animate-spin transition-all duration-700" 
+		 aria-hidden="true">
 		<svg class="w-full h-full" fill="none" viewBox="0 0 24 24">
 			<circle 
 				class="opacity-25" 
@@ -27,4 +29,12 @@
 			></path>
 		</svg>
 	</div>
+	
+	{#if message}
+		<p class="text-sm text-gray-500 text-center max-w-xs">
+			{message}
+		</p>
+	{/if}
+	
+	<span class="sr-only">Loading...</span>
 </div>
