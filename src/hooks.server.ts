@@ -1,7 +1,7 @@
 import type { Handle } from '@sveltejs/kit';
 
 // SvelteKit handle function
-// WebSocket server is now initialized in server.js for production
+// TODO: WebSocket server will be added once module resolution is fixed
 export const handle: Handle = async ({ event, resolve }) => {
 	// You can add middleware logic here if needed
 	

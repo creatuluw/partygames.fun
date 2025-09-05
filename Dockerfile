@@ -25,4 +25,4 @@ COPY src/lib/utils src/lib/utils
 EXPOSE 3000
 
 # Start the application
-CMD ["npm", "start"]
+CMD ["node", "build"]
