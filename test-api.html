@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test</title>
+</head>
+<body>
+    <h1>API Test</h1>
+    <button onclick="testCreateSession()">Test Create Session</button>
+    <button onclick="testGetSessions()">Test Get Sessions</button>
+    <div id="result"></div>
+
+    <script>
+        async function testCreateSession() {
+            const result = document.getElementById('result');
+            result.innerHTML = 'Testing create session...';
+            
+            try {
+                const response = await fetch('https://postgrestpostgrest-production-dd5b.up.railway.app/rpc/create_session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        p_host_id: 'test-browser-' + Date.now(),
+                        p_game_type: 'agario',
+                        p_max_players: 10
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    result.innerHTML = `✅ Success: ${JSON.stringify(data, null, 2)}`;
+                } else {
+                    const error = await response.text();
+                    result.innerHTML = `❌ Error: ${error}`;
+                }
+            } catch (error) {
+                result.innerHTML = `❌ Network Error: ${error.message}`;
+            }
+        }
+        
+        async function testGetSessions() {
+            const result = document.getElementById('result');
+            result.innerHTML = 'Testing get sessions...';
+            
+            try {
+                const response = await fetch('https://postgrestpostgrest-production-dd5b.up.railway.app/sessions');
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    result.innerHTML = `✅ Success: ${JSON.stringify(data, null, 2)}`;
+                } else {
+                    const error = await response.text();
+                    result.innerHTML = `❌ Error: ${error}`;
+                }
+            } catch (error) {
+                result.innerHTML = `❌ Network Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>

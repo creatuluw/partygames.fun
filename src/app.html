@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="Multiplayer party games webapp - Play real-time games with friends using your phone as a controller" />
+		<meta name="theme-color" content="#3b82f6" />
+		
+		<!-- PWA Meta Tags -->
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+		<meta name="apple-mobile-web-app-title" content="Party Games" />
+		
+		<!-- Mobile Optimizations -->
+		<style>
+			input[type="text"], 
+			input[type="number"], 
+			textarea, 
+			select {
+				font-size: 16px !important;
+			}
+			
+			/* Prevent pull-to-refresh */
+			html, body {
+				overscroll-behavior: none;
+				overflow-x: hidden;
+				-webkit-overflow-scrolling: touch;
+			}
+			
+			/* Disable text selection for game elements */
+			.no-select {
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+				-webkit-tap-highlight-color: transparent;
+			}
+		</style>
+		
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover" class="bg-gray-50 min-h-screen">
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
+</html>
